@@ -20,48 +20,32 @@
     url('/consulta-hero-bg.jpg') center center / cover no-repeat;
 }
 
-/* Medium plane in sky — soft edges, no hard box */
+/* Plane only — transparent cutout, no photo box */
 .landing-plane-layer {
   position: absolute;
-  top: 5%;
-  right: 1%;
-  width: min(40vw, 400px);
-  height: min(26vw, 250px);
+  top: 8%;
+  right: 4%;
+  width: min(34vw, 340px);
+  height: auto;
   z-index: 3;
   pointer-events: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  animation: plane-fly 12s ease-in-out infinite;
+  background: none;
+  border: 0;
+  box-shadow: none;
+  animation: plane-fly 14s ease-in-out infinite;
   will-change: transform;
 }
 
 .landing-plane {
   width: 100%;
-  height: 100%;
-  object-fit: contain;
-  object-position: center;
+  height: auto;
   display: block;
   border: 0;
-  border-radius: 0;
-  box-shadow: none;
   background: transparent;
-  opacity: 1;
-  filter: drop-shadow(0 10px 18px rgba(20, 43, 74, 0.22));
-  -webkit-mask-image: radial-gradient(
-    ellipse 72% 68% at 50% 48%,
-    #000 0%,
-    #000 58%,
-    rgba(0, 0, 0, 0.65) 78%,
-    transparent 100%
-  );
-  mask-image: radial-gradient(
-    ellipse 72% 68% at 50% 48%,
-    #000 0%,
-    #000 58%,
-    rgba(0, 0, 0, 0.65) 78%,
-    transparent 100%
-  );
+  box-shadow: none;
+  border-radius: 0;
+  -webkit-mask-image: none;
+  mask-image: none;
 }
 
 .landing-wash {
@@ -80,16 +64,13 @@
 
 @keyframes plane-fly {
   0% {
-    transform: translate3d(8%, 4%, 0) rotate(-2deg);
+    transform: translate3d(6%, 2%, 0) rotate(-3deg);
   }
-  40% {
-    transform: translate3d(-10%, -2%, 0) rotate(1.5deg);
-  }
-  70% {
-    transform: translate3d(-18%, 3%, 0) rotate(-0.5deg);
+  50% {
+    transform: translate3d(-22%, -4%, 0) rotate(2deg);
   }
   100% {
-    transform: translate3d(8%, 4%, 0) rotate(-2deg);
+    transform: translate3d(6%, 2%, 0) rotate(-3deg);
   }
 }
 
@@ -815,12 +796,10 @@
   }
 
   .landing-plane-layer {
-    top: 2%;
-    right: 0;
-    width: min(58vw, 280px);
-    height: min(38vw, 180px);
-    animation-duration: 14s;
-    opacity: 0.92;
+    top: 4%;
+    right: 2%;
+    width: min(52vw, 220px);
+    animation-duration: 16s;
   }
 
   .landing-waves {

@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 280" fill="none" aria-hidden="true">
+  <defs>
+    <linearGradient id="fuselage" x1="40" y1="110" x2="600" y2="170" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="55%" stop-color="#f4f7fb"/>
+      <stop offset="100%" stop-color="#d9e2ec"/>
+    </linearGradient>
+    <linearGradient id="wing" x1="250" y1="150" x2="420" y2="230" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#c8d4e3"/>
+    </linearGradient>
+    <filter id="soft" x="-20%" y="-40%" width="140%" height="180%">
+      <feDropShadow dx="0" dy="10" stdDeviation="8" flood-color="#142B4A" flood-opacity="0.28"/>
+    </filter>
+  </defs>
+  <g filter="url(#soft)">
+    <!-- tail -->
+    <path d="M500 118 L592 52 L606 68 L548 148 Z" fill="url(#fuselage)" stroke="#b7c5d6" stroke-width="1.2"/>
+    <path d="M508 148 L598 168 L586 186 L500 162 Z" fill="#e8eef5" stroke="#b7c5d6" stroke-width="1"/>
+    <!-- fuselage -->
+    <path d="M48 148 C70 118 120 104 190 108 L470 124 C510 128 545 140 560 156 C545 176 505 186 460 184 L200 172 C120 168 70 168 48 148 Z" fill="url(#fuselage)" stroke="#b7c5d6" stroke-width="1.4"/>
+    <!-- nose highlight -->
+    <path d="M48 148 C58 132 78 122 104 118" stroke="#ffffff" stroke-width="3" stroke-linecap="round" opacity="0.7"/>
+    <!-- windows -->
+    <g fill="#244B75" opacity="0.85">
+      <circle cx="150" cy="138" r="3.2"/>
+      <circle cx="170" cy="139" r="3.2"/>
+      <circle cx="190" cy="140" r="3.2"/>
+      <circle cx="210" cy="141" r="3.2"/>
+      <circle cx="230" cy="142" r="3.2"/>
+      <circle cx="250" cy="143" r="3.2"/>
+      <circle cx="270" cy="144" r="3.2"/>
+      <circle cx="290" cy="145" r="3.2"/>
+      <circle cx="310" cy="146" r="3.2"/>
+      <circle cx="330" cy="147" r="3.2"/>
+      <circle cx="350" cy="148" r="3.2"/>
+      <circle cx="370" cy="149" r="3.2"/>
+      <circle cx="390" cy="150" r="3.2"/>
+      <circle cx="410" cy="151" r="3.2"/>
+      <circle cx="430" cy="152" r="3.2"/>
+      <circle cx="450" cy="153" r="3.2"/>
+    </g>
+    <!-- main wing -->
+    <path d="M250 158 L430 210 L448 198 L320 148 Z" fill="url(#wing)" stroke="#aebccb" stroke-width="1.2"/>
+    <!-- engines -->
+    <ellipse cx="300" cy="188" rx="28" ry="14" fill="#eef3f8" stroke="#9aabbc" stroke-width="1.4"/>
+    <ellipse cx="300" cy="188" rx="10" ry="8" fill="#6b7f94"/>
+    <ellipse cx="360" cy="200" rx="24" ry="12" fill="#eef3f8" stroke="#9aabbc" stroke-width="1.4"/>
+    <ellipse cx="360" cy="200" rx="8" ry="7" fill="#6b7f94"/>
+    <!-- wing tip -->
+    <path d="M430 210 L458 204 L448 198 Z" fill="#d7e0ea"/>
+  </g>
+</svg>
