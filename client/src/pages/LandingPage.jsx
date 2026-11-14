@@ -178,7 +178,7 @@ export default function LandingPage() {
       <main className="landing-stage">
         <section className="landing-copy">
           <h1>
-            Consulta Participants –
+            Consulta Participants
             <span className="accent-text">Travel Information</span>
           </h1>
           <p className="subtitle">
