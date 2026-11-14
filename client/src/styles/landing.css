@@ -20,12 +20,12 @@
     url('/consulta-hero-bg.jpg') center center / cover no-repeat;
 }
 
-/* Plane only — white jet + blue tail, no photo box */
+/* Dark sky-blue widebody — no box */
 .landing-plane-layer {
   position: absolute;
   top: 9%;
   right: 5%;
-  width: min(22vw, 210px);
+  width: min(20vw, 190px);
   height: auto;
   z-index: 3;
   pointer-events: none;
@@ -44,8 +44,6 @@
   background: transparent;
   box-shadow: none;
   border-radius: 0;
-  -webkit-mask-image: none;
-  mask-image: none;
 }
 
 .landing-wash {
@@ -798,7 +796,7 @@
   .landing-plane-layer {
     top: 5%;
     right: 3%;
-    width: min(34vw, 150px);
+    width: min(42vw, 170px);
     animation-duration: 18s;
   }
 
