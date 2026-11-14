@@ -1,14 +1,18 @@
+import { useState } from 'react';
 import { Link, useLocation, Navigate } from 'react-router-dom';
 import {
   IconBuilding,
+  IconCalendar,
   IconCheck,
   IconClock,
   IconGlobe,
   IconMail,
+  IconMenu,
   IconNote,
   IconPhone,
   IconPin,
   IconPlane,
+  IconPrint,
   IconTicket,
   IconUser,
 } from '../components/Icons';
@@ -17,10 +21,11 @@ import { formatDateTime } from '../utils/format';
 import Brand from '../components/Brand';
 import '../styles/landing.css';
 
-function IconBack(props) {
+function IconHome(props) {
   return (
-    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" {...props}>
-      <path d="M15 6 9 12l6 6" strokeLinecap="round" strokeLinejoin="round" />
+    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.8" {...props}>
+      <path d="M4 11.5 12 4l8 7.5" />
+      <path d="M6.5 10.5V20h11V10.5" />
     </svg>
   );
 }
@@ -50,13 +55,14 @@ function Row({ icon, label, value }) {
 export default function ConfirmationPage() {
   const location = useLocation();
   const participant = location.state?.participant;
+  const [menuOpen, setMenuOpen] = useState(false);
 
   if (!participant) {
     return <Navigate to="/" replace />;
   }
 
   return (
-    <div className="confirm-page confirm-fixed">
+    <div className="confirm-page confirm-fixed confirm-v2">
       <div className="confirm-bg" aria-hidden />
       <div className="confirm-wash" aria-hidden />
 
@@ -76,22 +82,39 @@ export default function ConfirmationPage() {
 
       <header className="confirm-topbar">
         <Brand />
+        <div className="confirm-menu-wrap">
+          <button
+            type="button"
+            className="confirm-menu-btn"
+            aria-label="Open menu"
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen((v) => !v)}
+          >
+            <IconMenu />
+          </button>
+          {menuOpen ? (
+            <div className="confirm-menu-dropdown">
+              <Link to="/" onClick={() => setMenuOpen(false)}>
+                Home
+              </Link>
+              <Link to="/admin/login" onClick={() => setMenuOpen(false)}>
+                Administrator
+              </Link>
+            </div>
+          ) : null}
+        </div>
       </header>
 
       <main className="confirm-stage">
         <div className="confirm-card">
-          <Link className="confirm-back" to="/" aria-label="Back to home">
-            <IconBack />
-          </Link>
-
           <div className="confirm-icon" aria-hidden>
-            <IconCheck width={30} height={30} strokeWidth="2.4" />
+            <IconCheck width={28} height={28} strokeWidth="2.6" />
           </div>
 
           <h1>Travel details confirmed</h1>
           <p className="confirm-lead">
-            Thank you, {participant.fullName}. Your travel information is with the
-            Consulta travel desk and a copy has been sent to the response inbox.
+            Thank you, <strong>{participant.fullName}</strong>. Your travel information is
+            with the Consulta travel desk and a copy has been sent to the response inbox.
           </p>
 
           <div className="confirm-meta">
@@ -149,7 +172,7 @@ export default function ConfirmationPage() {
               value={participant.arrivalAirport}
             />
             <Row
-              icon={<IconLanding />}
+              icon={<IconCalendar width={15} height={15} />}
               label="Arrival Date & Time"
               value={
                 participant.arrivalDatetime
@@ -163,7 +186,7 @@ export default function ConfirmationPage() {
               value={participant.departureAirport}
             />
             <Row
-              icon={<IconPlane width={15} height={15} />}
+              icon={<IconLanding />}
               label="Departure Date & Time"
               value={
                 participant.departureDatetime
@@ -177,6 +200,21 @@ export default function ConfirmationPage() {
               value={participant.specialRequests}
             />
           </div>
+
+          <div className="confirm-actions">
+            <Link className="btn confirm-home-btn" to="/">
+              <IconHome />
+              Return to Home
+            </Link>
+            <button
+              className="btn confirm-print-btn"
+              type="button"
+              onClick={() => window.print()}
+            >
+              <IconPrint />
+              Print Confirmation
+            </button>
+          </div>
         </div>
       </main>
 
@@ -185,6 +223,7 @@ export default function ConfirmationPage() {
           <IconMail width={15} height={15} />
           Responses: sathishpaulj@gmail.com
         </span>
+        <span className="confirm-copy">© 2026 Consulta Travel Information</span>
       </footer>
     </div>
   );
