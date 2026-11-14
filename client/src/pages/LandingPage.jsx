@@ -147,13 +147,9 @@ export default function LandingPage() {
     <div className="landing landing-fixed landing-exact">
       {submitting ? <LoadingOverlay label="Submitting your travel details…" /> : null}
 
-      <div className="landing-bg" aria-hidden />
-      <img
-        className="landing-plane"
-        src="/plane-sky-overlay.jpg"
-        alt=""
-        aria-hidden
-      />
+      <div className="landing-bg" aria-hidden>
+        <div className="landing-plane-layer" />
+      </div>
       <div className="landing-wash" aria-hidden />
       <div className="landing-waves" aria-hidden>
         <svg viewBox="0 0 1440 90" preserveAspectRatio="none">
