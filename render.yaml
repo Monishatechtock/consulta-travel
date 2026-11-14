@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: consulta-travel
+    runtime: node
+    plan: free
+    region: oregon
+    buildCommand: npm run render-build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: "20"
+      - key: JWT_SECRET
+        generateValue: true
+      - key: ADMIN_USERNAME
+        value: admin
+      - key: ADMIN_PASSWORD
+        value: Consulta@2026
+      - key: ADMIN_NAME
+        value: Travel Administrator
+      - key: NOTIFY_ADMIN_EMAIL
+        value: brijithmonisha@dbcyelagiri.edu.in
+      - key: CLIENT_ORIGIN
+        value: "*"

@@ -1,0 +1,651 @@
+/* Exact match to approved Consulta Travel mockup — do not diverge */
+
+.landing-fixed {
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  position: relative;
+  background: #142b4a;
+}
+
+.landing-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: url('/consulta-hero-bg.jpg') center center / cover no-repeat;
+}
+
+.landing-wash {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    100deg,
+    rgba(255, 255, 255, 0.72) 0%,
+    rgba(255, 255, 255, 0.42) 36%,
+    rgba(255, 255, 255, 0.12) 62%,
+    rgba(255, 255, 255, 0.04) 100%
+  );
+}
+
+.landing-waves {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 2.5rem;
+  z-index: 2;
+  height: 70px;
+  pointer-events: none;
+}
+
+.landing-waves svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.landing-topbar,
+.landing-stage,
+.landing-footer-slim {
+  position: relative;
+  z-index: 3;
+}
+
+.landing-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 1rem clamp(1.4rem, 3.5vw, 2.8rem) 0.25rem;
+}
+
+.landing-stage {
+  display: grid;
+  grid-template-columns: minmax(300px, 0.95fr) minmax(460px, 1.2fr);
+  gap: clamp(1.2rem, 3vw, 2.8rem);
+  align-items: center;
+  width: min(1240px, calc(100% - 2.6rem));
+  margin: 0 auto;
+  min-height: 0;
+  padding: 0.2rem 0 0.9rem;
+}
+
+.landing-copy {
+  max-width: 36rem;
+}
+
+.landing-copy h1 {
+  font-family: var(--font-sans);
+  font-weight: 800;
+  font-size: clamp(1.75rem, 3.2vw, 2.55rem);
+  line-height: 1.14;
+  margin-bottom: 0.7rem;
+  color: #142b4a;
+  letter-spacing: -0.02em;
+}
+
+.landing-copy .accent-text {
+  display: block;
+  color: #c5a15b;
+  margin-top: 0.15rem;
+}
+
+.landing-copy .subtitle {
+  color: #4b5c6e;
+  font-size: clamp(0.95rem, 1.2vw, 1.06rem);
+  max-width: 34ch;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.landing-features {
+  display: grid;
+  gap: 0.95rem;
+}
+
+.landing-features li {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: #263445;
+  font-size: 0.95rem;
+  font-weight: 650;
+}
+
+.feature-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #5b9fd4;
+  color: #fff;
+  flex-shrink: 0;
+  box-shadow: 0 8px 16px rgba(91, 159, 212, 0.3);
+}
+
+.feature-divider {
+  width: 1px;
+  height: 22px;
+  background: rgba(20, 43, 74, 0.22);
+  flex-shrink: 0;
+}
+
+.landing-form-wrap {
+  min-height: 0;
+  display: flex;
+  align-items: center;
+}
+
+.mock-form {
+  position: relative;
+  width: 100%;
+  padding: 1.25rem 1.35rem 1.2rem;
+  background: #ffffff;
+  border-radius: 28px;
+  box-shadow: 0 24px 55px rgba(20, 43, 74, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+}
+
+.form-card-header {
+  margin-bottom: 1rem;
+}
+
+.form-title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  text-align: left;
+}
+
+.form-tab {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: #142b4a;
+  color: #fff;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  box-shadow: 0 10px 18px rgba(20, 43, 74, 0.28);
+  overflow: hidden;
+}
+
+.form-tab img {
+  display: block;
+  width: 28px;
+  height: 28px;
+}
+
+.form-title-copy h2 {
+  font-size: 1.28rem;
+  margin-bottom: 0.18rem;
+  color: #142b4a;
+  font-weight: 800;
+}
+
+.form-title-copy p {
+  color: #5b6b7c;
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+.form-grid.compact {
+  gap: 0.7rem 0.85rem;
+}
+
+.form-grid.three {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.field-iconed label {
+  font-size: 0.74rem;
+  margin-bottom: 0.28rem;
+  color: #142b4a;
+  font-weight: 700;
+}
+
+.field-iconed .req {
+  color: #d64545;
+  margin-left: 2px;
+}
+
+.field-iconed .error-text {
+  display: block;
+  margin-top: 0.28rem;
+  color: #d64545;
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.field-iconed.field-error input,
+.field-iconed.field-error select {
+  border-color: #d64545;
+  background: #fff8f8;
+}
+
+.field-iconed.field-error input:focus,
+.field-iconed.field-error select:focus {
+  border-color: #d64545;
+  box-shadow: 0 0 0 3px rgba(214, 69, 69, 0.15);
+}
+
+.input-with-icon {
+  position: relative;
+}
+
+.input-with-icon .field-icon {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #244b75;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+
+.form-grid.compact .field input,
+.form-grid.compact .field select {
+  padding: 0.6rem 0.75rem 0.6rem 2.3rem;
+  font-size: 0.85rem;
+  border-radius: 10px;
+  border: 1px solid #d5dee8;
+  background: #fff;
+  min-height: 42px;
+  width: 100%;
+}
+
+.form-grid.compact .field input::placeholder {
+  color: #94a3b8;
+}
+
+.form-grid.compact .field input:focus,
+.form-grid.compact .field select:focus {
+  outline: none;
+  border-color: #c5a15b;
+  box-shadow: 0 0 0 3px rgba(197, 161, 91, 0.2);
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 1.05rem;
+}
+
+.btn-navy,
+.submit-btn {
+  background: #142b4a;
+  color: #fff;
+  border-radius: 12px;
+  padding: 0.85rem 1.35rem;
+  font-weight: 700;
+  box-shadow: 0 14px 26px rgba(20, 43, 74, 0.24);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.btn-navy svg,
+.submit-btn svg {
+  flex-shrink: 0;
+  display: block;
+}
+
+.btn-navy:hover:not(:disabled),
+.submit-btn:hover:not(:disabled) {
+  background: #1a3558;
+}
+
+.landing-footer-slim {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 0.75rem clamp(1.4rem, 3.5vw, 2.8rem);
+  font-size: 0.8rem;
+  color: rgba(248, 250, 252, 0.95);
+  background: #142b4a;
+  z-index: 4;
+}
+
+.footer-mail {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.landing-exact .brand {
+  color: #142b4a;
+}
+
+.landing-exact .brand-mark {
+  background: transparent;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.landing-exact .brand-mark img {
+  display: block;
+  width: 44px;
+  height: 44px;
+}
+
+.landing-exact .brand-text strong {
+  font-size: 1.08rem;
+  font-weight: 800;
+}
+
+.landing-exact .brand-text span {
+  color: #5b6b7c;
+  opacity: 1;
+  font-weight: 600;
+}
+
+.confirm-fixed {
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  position: relative;
+  background: #142b4a;
+}
+
+.confirm-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: url('/consulta-hero-bg.jpg') center center / cover no-repeat;
+}
+
+.confirm-wash {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    105deg,
+    rgba(255, 255, 255, 0.55) 0%,
+    rgba(255, 255, 255, 0.2) 45%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+}
+
+.confirm-waves {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 2.45rem;
+  z-index: 2;
+  height: 68px;
+  pointer-events: none;
+}
+
+.confirm-waves svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.confirm-topbar,
+.confirm-stage,
+.confirm-footer {
+  position: relative;
+  z-index: 3;
+}
+
+.confirm-topbar {
+  display: flex;
+  align-items: center;
+  padding: 0.95rem clamp(1.3rem, 3.2vw, 2.6rem) 0;
+}
+
+.confirm-back {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #f3f6fa;
+  color: #142b4a;
+  border: 1px solid #e2e8f0;
+  z-index: 6;
+  transition:
+    background 160ms ease,
+    transform 160ms ease,
+    border-color 160ms ease;
+}
+
+.confirm-back:hover {
+  background: #e8eef6;
+  color: #142b4a;
+  border-color: #c5d0dc;
+  transform: translateX(-2px);
+}
+
+.confirm-topbar .brand {
+  color: #142b4a;
+}
+
+.confirm-topbar .brand-text span {
+  color: #5b6b7c;
+  opacity: 1;
+  font-weight: 600;
+}
+
+.confirm-stage {
+  min-height: 0;
+  display: grid;
+  place-items: center;
+  padding: 2rem 1rem 0.6rem;
+  overflow: visible;
+}
+
+.confirm-card {
+  position: relative;
+  width: min(460px, 100%);
+  max-height: calc(100dvh - 7.2rem);
+  overflow: visible;
+  padding: 1.35rem 1.45rem 1.25rem;
+  text-align: center;
+  animation: confirm-card-in 280ms ease;
+  background: #fff;
+  border-radius: 24px;
+  box-shadow: 0 26px 55px rgba(20, 43, 74, 0.22);
+}
+
+/* Success logo centered inside popup above Travel details confirmed */
+.confirm-icon {
+  position: relative;
+  top: auto;
+  left: auto;
+  right: auto;
+  margin: 0.15rem auto 0.85rem;
+  transform: none;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #2f9e6d;
+  color: #fff;
+  border: 0;
+  box-shadow: 0 10px 22px rgba(47, 158, 109, 0.22);
+  z-index: 1;
+}
+
+@keyframes confirm-card-in {
+  from {
+    opacity: 0;
+    translate: 0 10px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+.confirm-card h1 {
+  font-size: clamp(1.3rem, 2.4vw, 1.55rem);
+  margin-bottom: 0.45rem;
+  color: #142b4a;
+  font-weight: 800;
+}
+
+.confirm-lead {
+  color: #667788;
+  margin: 0 0 0.95rem;
+  font-size: 0.86rem;
+  line-height: 1.45;
+}
+
+.confirm-meta {
+  text-align: left;
+  background: transparent;
+  border-radius: 0;
+  padding: 0;
+  margin-bottom: 0.25rem;
+  border: 0;
+  max-height: min(46vh, 340px);
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.confirm-meta::-webkit-scrollbar {
+  width: 6px;
+}
+
+.confirm-meta::-webkit-scrollbar-thumb {
+  background: #c5d0dc;
+  border-radius: 999px;
+}
+
+.confirm-meta-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  column-gap: 0.85rem;
+  min-height: 42px;
+  padding: 0.45rem 0.15rem;
+  border-bottom: 1px solid #e8eef4;
+}
+
+.confirm-meta-row:last-child {
+  border-bottom: 0;
+}
+
+.confirm-meta-row span {
+  color: #6b7c8d;
+  font-size: 0.82rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  line-height: 1;
+}
+
+.confirm-meta-row span svg {
+  flex-shrink: 0;
+}
+
+.confirm-meta-row strong {
+  color: #142b4a;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-align: right;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  line-height: 1;
+}
+
+.confirm-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.7rem 1rem;
+  background: #142b4a;
+  color: #fff;
+  font-size: 0.82rem;
+  z-index: 4;
+}
+
+.confirm-footer .footer-mail {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: transparent;
+  padding: 0;
+}
+
+@media print {
+  .confirm-fixed {
+    height: auto;
+    overflow: visible;
+    background: #fff;
+  }
+
+  .confirm-bg,
+  .confirm-wash,
+  .confirm-waves,
+  .confirm-topbar,
+  .confirm-footer {
+    display: none !important;
+  }
+
+  .confirm-card {
+    box-shadow: none;
+    max-height: none;
+    width: 100%;
+    margin-top: 1rem;
+  }
+
+}
+
+@media (max-width: 980px) {
+  .landing-fixed {
+    overflow-y: auto;
+  }
+
+  .landing-stage {
+    grid-template-columns: 1fr;
+    align-content: start;
+    padding: 0.5rem 0 1.2rem;
+  }
+
+  .landing-features {
+    display: none;
+  }
+
+  .form-grid.three {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .form-grid.three {
+    grid-template-columns: 1fr;
+  }
+
+  .form-actions {
+    justify-content: stretch;
+  }
+
+  .form-actions .btn {
+    width: 100%;
+  }
+}
