@@ -152,7 +152,7 @@ export default function LandingPage() {
       <div className="landing-plane-layer" aria-hidden>
         <img
           className="landing-plane"
-          src="/plane-ref.png"
+          src="/plane-cutout.png"
           alt=""
           draggable="false"
         />

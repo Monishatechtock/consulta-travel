@@ -20,12 +20,12 @@
     url('/consulta-hero-bg.jpg') center center / cover no-repeat;
 }
 
-/* Photo plane model only — soft fade, no hard box */
+/* Small plane cutout only — no sky box */
 .landing-plane-layer {
   position: absolute;
-  top: 6%;
-  right: 2%;
-  width: min(28vw, 260px);
+  top: 10%;
+  right: 6%;
+  width: min(14vw, 130px);
   height: auto;
   z-index: 3;
   pointer-events: none;
@@ -44,21 +44,9 @@
   background: transparent;
   box-shadow: none;
   border-radius: 0;
-  filter: drop-shadow(0 10px 16px rgba(20, 43, 74, 0.25));
-  -webkit-mask-image: radial-gradient(
-    ellipse 78% 72% at 48% 52%,
-    #000 0%,
-    #000 58%,
-    rgba(0, 0, 0, 0.75) 74%,
-    transparent 100%
-  );
-  mask-image: radial-gradient(
-    ellipse 78% 72% at 48% 52%,
-    #000 0%,
-    #000 58%,
-    rgba(0, 0, 0, 0.75) 74%,
-    transparent 100%
-  );
+  -webkit-mask-image: none;
+  mask-image: none;
+  filter: drop-shadow(0 6px 10px rgba(20, 43, 74, 0.22));
 }
 
 .landing-wash {
@@ -809,9 +797,9 @@
   }
 
   .landing-plane-layer {
-    top: 4%;
-    right: 1%;
-    width: min(48vw, 200px);
+    top: 6%;
+    right: 4%;
+    width: min(28vw, 110px);
     animation-duration: 18s;
   }
 
