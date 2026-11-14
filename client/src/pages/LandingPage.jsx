@@ -364,7 +364,7 @@ export default function LandingPage() {
         <span>© 2026 Consulta Travel Information</span>
         <span className="footer-mail">
           <IconMail width={14} height={14} />
-          Responses: brijithmonisha@dbcyelagiri.edu.in
+          Responses: sathishpaulj@gmail.com
         </span>
       </footer>
     </div>

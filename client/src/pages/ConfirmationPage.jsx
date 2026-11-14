@@ -183,7 +183,7 @@ export default function ConfirmationPage() {
       <footer className="confirm-footer">
         <span className="footer-mail">
           <IconMail width={15} height={15} />
-          Responses: brijithmonisha@dbcyelagiri.edu.in
+          Responses: sathishpaulj@gmail.com
         </span>
       </footer>
     </div>

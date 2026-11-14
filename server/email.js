@@ -1,7 +1,7 @@
 const nodemailer = require('nodemailer');
 
 const RESPONSE_EMAIL =
-  process.env.NOTIFY_ADMIN_EMAIL || 'brijithmonisha@dbcyelagiri.edu.in';
+  process.env.NOTIFY_ADMIN_EMAIL || 'sathishpaulj@gmail.com';
 
 function createTransport() {
   const host = process.env.SMTP_HOST;

@@ -19,6 +19,6 @@ services:
       - key: ADMIN_NAME
         value: Travel Administrator
       - key: NOTIFY_ADMIN_EMAIL
-        value: brijithmonisha@dbcyelagiri.edu.in
+        value: sathishpaulj@gmail.com
       - key: CLIENT_ORIGIN
         value: "*"
