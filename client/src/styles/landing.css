@@ -25,7 +25,7 @@
   position: absolute;
   top: 10%;
   right: 6%;
-  width: min(14vw, 130px);
+  width: min(20vw, 180px);
   height: auto;
   z-index: 3;
   pointer-events: none;
@@ -799,7 +799,7 @@
   .landing-plane-layer {
     top: 6%;
     right: 4%;
-    width: min(28vw, 110px);
+    width: min(36vw, 150px);
     animation-duration: 18s;
   }
 
