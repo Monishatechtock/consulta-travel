@@ -8,7 +8,7 @@
     "dev:client": "npm run dev --prefix client",
     "build": "npm run build --prefix client",
     "start": "npm run start --prefix server",
-    "render-build": "npm install --prefix client && npm install --prefix server && npm run build --prefix client && node scripts/copy-frontend.js"
+    "render-build": "npm install --prefix client --include=dev && npm install --prefix server && npm run build --prefix client && node scripts/copy-frontend.js"
   },
   "engines": {
     "node": ">=18"

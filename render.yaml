@@ -10,15 +10,21 @@ services:
     envVars:
       - key: NODE_VERSION
         value: "20"
+      - key: NODE_ENV
+        value: production
       - key: JWT_SECRET
         generateValue: true
       - key: ADMIN_USERNAME
-        value: admin
+        sync: false
       - key: ADMIN_PASSWORD
-        value: Consulta@2026
+        sync: false
       - key: ADMIN_NAME
         value: Travel Administrator
       - key: NOTIFY_ADMIN_EMAIL
-        value: sathishpaulj@gmail.com
+        sync: false
+      - key: RESEND_API_KEY
+        sync: false
+      - key: RESEND_FROM
+        sync: false
       - key: CLIENT_ORIGIN
         value: "*"

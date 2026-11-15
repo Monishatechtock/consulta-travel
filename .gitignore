@@ -2,8 +2,11 @@ node_modules/
 dist/
 server/data/
 server/public/
-.env.local
 .env
+.env.*
+!.env.example
 *.log
 .DS_Store
 client/dist/
+.vscode/
+.idea/

@@ -1,6 +1,4 @@
-
-const RESPONSE_EMAIL =
-  process.env.NOTIFY_ADMIN_EMAIL || 'sathishpaulj@gmail.com';
+const RESPONSE_EMAIL = process.env.NOTIFY_ADMIN_EMAIL;
 
 async function sendMail({ to, subject, html, text, replyTo }) {
   const apiKey = process.env.RESEND_API_KEY;
@@ -10,9 +8,13 @@ async function sendMail({ to, subject, html, text, replyTo }) {
     return { queued: false, mocked: true };
   }
 
+  if (!to) {
+    console.error('[email] NOTIFY_ADMIN_EMAIL is missing');
+    return { queued: false, mocked: true };
+  }
+
   const from =
-    process.env.RESEND_FROM ||
-    'Consulta Travel <onboarding@resend.dev>';
+    process.env.RESEND_FROM || 'Consulta Travel <onboarding@resend.dev>';
 
   const response = await fetch('https://api.resend.com/emails', {
     method: 'POST',
@@ -37,10 +39,7 @@ async function sendMail({ to, subject, html, text, replyTo }) {
     throw new Error(result.message || 'Email delivery failed');
   }
 
-  console.log('[email:sent]', {
-    to,
-    messageId: result.id,
-  });
+  console.log('[email:sent]', { messageId: result.id });
 
   return {
     queued: true,

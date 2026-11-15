@@ -44,9 +44,16 @@ db.exec(`
 `);
 
 function seedAdmin() {
-  const username = process.env.ADMIN_USERNAME || 'admin';
-  const password = process.env.ADMIN_PASSWORD || 'Consulta@2026';
+  const username = process.env.ADMIN_USERNAME;
+  const password = process.env.ADMIN_PASSWORD;
   const displayName = process.env.ADMIN_NAME || 'Travel Administrator';
+
+  if (!username || !password) {
+    throw new Error(
+      'ADMIN_USERNAME and ADMIN_PASSWORD environment variables are required'
+    );
+  }
+
   const existing = db.prepare('SELECT id FROM admins WHERE username = ?').get(username);
   if (!existing) {
     const hash = bcrypt.hashSync(password, 10);
