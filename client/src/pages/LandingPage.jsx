@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import Brand from '../components/Brand';
 import LoadingOverlay from '../components/LoadingOverlay';
 import {
-  IconBuilding,
   IconCalendar,
   IconGlobe,
   IconHeadset,
@@ -26,9 +25,7 @@ const INITIAL = {
   email: '',
   phone: '',
   country: '',
-  organization: '',
   flightNumber: '',
-  airline: '',
   arrivalAirport: '',
   arrivalDatetime: '',
   departureAirport: '',
@@ -271,38 +268,6 @@ export default function LandingPage() {
                 </select>
               </Field>
 
-              <Field id="organization" label="Organisation" icon={IconBuilding}>
-                <input
-                  id="organization"
-                  value={form.organization}
-                  onChange={update('organization')}
-                  placeholder="Institution"
-                />
-              </Field>
-
-              <Field id="airline" label="Airline" icon={IconPlane}>
-                <input
-                  id="airline"
-                  value={form.airline}
-                  onChange={update('airline')}
-                  placeholder="e.g. Air India"
-                  list="airline-suggestions"
-                />
-                <datalist id="airline-suggestions">
-                  {[
-                    'Air India',
-                    'IndiGo',
-                    'Emirates',
-                    'Qatar Airways',
-                    'Lufthansa',
-                    'British Airways',
-                    'Singapore Airlines',
-                  ].map((a) => (
-                    <option key={a} value={a} />
-                  ))}
-                </datalist>
-              </Field>
-
               <Field id="flightNumber" label="Flight No." icon={IconTicket}>
                 <input
                   id="flightNumber"
@@ -372,7 +337,7 @@ export default function LandingPage() {
         <span>© 2026 Consulta Travel Information</span>
         <span className="footer-mail">
           <IconMail width={14} height={14} />
-          Responses: sathishpaulj@gmail.com
+          Responses: jsathishpaul@gmail.com
         </span>
       </footer>
     </div>

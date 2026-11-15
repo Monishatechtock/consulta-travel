@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Link, useLocation, Navigate } from 'react-router-dom';
 import {
-  IconBuilding,
   IconCalendar,
   IconCheck,
   IconClock,
@@ -11,7 +10,6 @@ import {
   IconNote,
   IconPhone,
   IconPin,
-  IconPlane,
   IconPrint,
   IconTicket,
   IconUser,
@@ -152,16 +150,6 @@ export default function ConfirmationPage() {
               value={participant.country}
             />
             <Row
-              icon={<IconBuilding width={15} height={15} />}
-              label="Organisation"
-              value={participant.organization}
-            />
-            <Row
-              icon={<IconPlane width={15} height={15} />}
-              label="Airline"
-              value={participant.airline}
-            />
-            <Row
               icon={<IconTicket width={15} height={15} />}
               label="Flight No."
               value={participant.flightNumber}
@@ -221,7 +209,7 @@ export default function ConfirmationPage() {
       <footer className="confirm-footer">
         <span className="footer-mail">
           <IconMail width={15} height={15} />
-          Responses: sathishpaulj@gmail.com
+          Responses: jsathishpaul@gmail.com
         </span>
         <span className="confirm-copy">© 2026 Consulta Travel Information</span>
       </footer>

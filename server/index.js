@@ -130,7 +130,7 @@ app.post('/api/participants', async (req, res) => {
   if (errors.length) return res.status(400).json({ message: errors[0], errors });
 
   const status =
-    body.flightNumber && body.airline && body.arrivalDatetime ? 'Submitted' : 'Pending';
+    body.flightNumber && body.arrivalDatetime ? 'Submitted' : 'Pending';
 
   const info = db
     .prepare(

@@ -62,9 +62,7 @@ function buildSubmissionHtml(participant) {
           <tr><td><strong>Email</strong></td><td>${escapeHtml(participant.email)}</td></tr>
           <tr><td><strong>Phone</strong></td><td>${escapeHtml(participant.phone || '—')}</td></tr>
           <tr><td><strong>Country</strong></td><td>${escapeHtml(participant.country || '—')}</td></tr>
-          <tr><td><strong>Organisation</strong></td><td>${escapeHtml(participant.organization || '—')}</td></tr>
           <tr><td><strong>Flight</strong></td><td>${escapeHtml(participant.flight_number || '—')}</td></tr>
-          <tr><td><strong>Airline</strong></td><td>${escapeHtml(participant.airline || '—')}</td></tr>
           <tr><td><strong>Arrival airport</strong></td><td>${escapeHtml(participant.arrival_airport || '—')}</td></tr>
           <tr><td><strong>Arrival</strong></td><td>${escapeHtml(formatDt(participant.arrival_datetime))}</td></tr>
           <tr><td><strong>Departure airport</strong></td><td>${escapeHtml(participant.departure_airport || '—')}</td></tr>
