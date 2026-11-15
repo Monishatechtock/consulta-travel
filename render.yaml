@@ -6,6 +6,9 @@ services:
     region: oregon
     buildCommand: npm run render-build
     startCommand: npm start
+    # Dashboard Build Command MUST be exactly: npm run render-build
+    # Do not use: yarn install && npm run build --prefix client
+    # That skips client/server installs and causes "vite: not found" (exit 127).
     healthCheckPath: /api/health
     envVars:
       - key: NODE_VERSION
