@@ -1,20 +1,18 @@
-const RESPONSE_EMAIL = process.env.NOTIFY_ADMIN_EMAIL;
+const nodemailer = require('nodemailer');
 
-async function sendMail({ to, subject, html, text, replyTo }) {
-  const apiKey = process.env.RESEND_API_KEY;
+function env(name, fallback = '') {
+  const value = process.env[name];
+  if (value == null) return fallback;
+  return String(value).trim().replace(/^['"]|['"]$/g, '');
+}
 
-  if (!apiKey) {
-    console.error('[email] RESEND_API_KEY is missing');
-    return { queued: false, mocked: true };
-  }
+const RESPONSE_EMAIL = env('NOTIFY_ADMIN_EMAIL');
 
-  if (!to) {
-    console.error('[email] NOTIFY_ADMIN_EMAIL is missing');
-    return { queued: false, mocked: true };
-  }
+async function sendViaResend({ to, subject, html, text, replyTo }) {
+  const apiKey = env('RESEND_API_KEY');
+  if (!apiKey) return null;
 
-  const from =
-    process.env.RESEND_FROM || 'Consulta Travel <onboarding@resend.dev>';
+  const from = env('RESEND_FROM', 'Consulta Travel <onboarding@resend.dev>');
 
   const response = await fetch('https://api.resend.com/emails', {
     method: 'POST',
@@ -32,20 +30,93 @@ async function sendMail({ to, subject, html, text, replyTo }) {
     }),
   });
 
-  const result = await response.json();
-
+  const result = await response.json().catch(() => ({}));
   if (!response.ok) {
-    console.error('[email] Resend error:', result);
-    throw new Error(result.message || 'Email delivery failed');
+    console.error('[email] Resend error status=', response.status);
+    throw new Error(result.message || 'Resend email delivery failed');
   }
 
-  console.log('[email:sent]', { messageId: result.id });
+  console.log('[email:sent:resend]', { messageId: result.id });
+  return { queued: true, mocked: false, messageId: result.id, provider: 'resend' };
+}
 
+function createSmtpTransport() {
+  const host = env('SMTP_HOST');
+  const user = env('SMTP_USER');
+  const pass = env('SMTP_PASS');
+  if (!host || !user || !pass) return null;
+
+  return nodemailer.createTransport({
+    host,
+    port: Number(env('SMTP_PORT', '587')),
+    secure: env('SMTP_SECURE') === 'true',
+    auth: { user, pass },
+  });
+}
+
+async function sendViaSmtp({ to, subject, html, text, replyTo }) {
+  const transport = createSmtpTransport();
+  if (!transport) return null;
+
+  const user = env('SMTP_USER');
+  const from = env('SMTP_FROM', `Consulta Travel <${user}>`);
+
+  try {
+    await transport.verify();
+  } catch (err) {
+    console.error('[email] SMTP verify failed:', err.message);
+    throw new Error(`SMTP connection failed: ${err.message}`);
+  }
+
+  const info = await transport.sendMail({
+    from,
+    to,
+    subject,
+    html,
+    text: text || html.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim(),
+    replyTo,
+  });
+
+  console.log('[email:sent:smtp]', { messageId: info.messageId, accepted: info.accepted });
   return {
     queued: true,
     mocked: false,
-    messageId: result.id,
+    messageId: info.messageId,
+    provider: 'smtp',
   };
+}
+
+async function sendMail({ to, subject, html, text, replyTo }) {
+  const destination = String(to || '').trim();
+  if (!destination) {
+    console.error('[email] NOTIFY_ADMIN_EMAIL is missing');
+    return { queued: false, mocked: true };
+  }
+
+  try {
+    const viaResend = await sendViaResend({
+      to: destination,
+      subject,
+      html,
+      text,
+      replyTo,
+    });
+    if (viaResend) return viaResend;
+  } catch (err) {
+    console.error('[email] Resend failed, trying SMTP:', err.message);
+  }
+
+  const viaSmtp = await sendViaSmtp({
+    to: destination,
+    subject,
+    html,
+    text,
+    replyTo,
+  });
+  if (viaSmtp) return viaSmtp;
+
+  console.error('[email] No email provider configured (RESEND_API_KEY or SMTP_*)');
+  return { queued: false, mocked: true };
 }
 
 function buildSubmissionHtml(participant) {
