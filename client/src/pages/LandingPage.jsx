@@ -88,7 +88,7 @@ export default function LandingPage() {
   const update = (key) => (e) => {
     let value = e.target.value;
     if (key === 'phone') {
-      value = value.replace(/\D/g, '').slice(0, 12);
+      value = value.replace(/\D/g, '').slice(0, 15);
     }
     setForm((prev) => ({ ...prev, [key]: value }));
     setErrors((prev) => ({ ...prev, [key]: undefined }));
@@ -102,8 +102,8 @@ export default function LandingPage() {
       next.email = 'Enter a valid email address';
     }
     if (!form.phone.trim()) next.phone = 'Mobile number is required';
-    else if (!/^\d{12}$/.test(form.phone.trim())) {
-      next.phone = 'Mobile number must be exactly 12 digits';
+    else if (!/^\d+$/.test(form.phone.trim())) {
+      next.phone = 'Mobile number must contain only numbers';
     }
     if (!form.country.trim()) next.country = 'Country is required';
     setErrors(next);
@@ -251,11 +251,11 @@ export default function LandingPage() {
                   id="phone"
                   type="tel"
                   inputMode="numeric"
-                  pattern="[0-9]{12}"
-                  maxLength={12}
+                  pattern="[0-9]*"
+                  maxLength={15}
                   value={form.phone}
                   onChange={update('phone')}
-                  placeholder="12-digit mobile number"
+                  placeholder="Mobile number"
                   autoComplete="tel"
                 />
               </Field>

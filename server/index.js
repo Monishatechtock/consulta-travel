@@ -75,8 +75,8 @@ function validateParticipant(body) {
   }
   if (!body.phone || String(body.phone).trim() === '') {
     errors.push('Mobile number is required');
-  } else if (!/^\d{12}$/.test(String(body.phone).trim())) {
-    errors.push('Mobile number must be exactly 12 digits');
+  } else if (!/^\d+$/.test(String(body.phone).trim())) {
+    errors.push('Mobile number must contain only numbers');
   }
   if (!body.country || String(body.country).trim() === '') {
     errors.push('Country is required');
