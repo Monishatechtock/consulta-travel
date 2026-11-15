@@ -227,7 +227,6 @@ export default function LandingPage() {
                   id="fullName"
                   value={form.fullName}
                   onChange={update('fullName')}
-                  placeholder="Passenger name"
                   autoComplete="name"
                 />
               </Field>
@@ -238,7 +237,6 @@ export default function LandingPage() {
                   type="email"
                   value={form.email}
                   onChange={update('email')}
-                  placeholder="you@organisation.org"
                   autoComplete="email"
                 />
               </Field>
@@ -252,14 +250,13 @@ export default function LandingPage() {
                   maxLength={15}
                   value={form.phone}
                   onChange={update('phone')}
-                  placeholder="Mobile number"
                   autoComplete="tel"
                 />
               </Field>
 
               <Field id="country" label="Country" required error={errors.country} icon={IconGlobe}>
                 <select id="country" value={form.country} onChange={update('country')}>
-                  <option value="">Select country</option>
+                  <option value=""></option>
                   {COUNTRIES.map((c) => (
                     <option key={c} value={c}>
                       {c}
@@ -273,7 +270,6 @@ export default function LandingPage() {
                   id="flightNumber"
                   value={form.flightNumber}
                   onChange={update('flightNumber')}
-                  placeholder="AI101"
                 />
               </Field>
 
@@ -282,7 +278,6 @@ export default function LandingPage() {
                   id="arrivalAirport"
                   value={form.arrivalAirport}
                   onChange={update('arrivalAirport')}
-                  placeholder="DEL"
                 />
               </Field>
 
@@ -300,7 +295,6 @@ export default function LandingPage() {
                   id="departureAirport"
                   value={form.departureAirport}
                   onChange={update('departureAirport')}
-                  placeholder="DEL"
                 />
               </Field>
 
@@ -318,7 +312,6 @@ export default function LandingPage() {
                   id="specialRequests"
                   value={form.specialRequests}
                   onChange={update('specialRequests')}
-                  placeholder="Assistance or meal notes"
                 />
               </Field>
             </div>
