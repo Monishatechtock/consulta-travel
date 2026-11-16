@@ -25,6 +25,8 @@ services:
         value: Travel Administrator
       - key: NOTIFY_ADMIN_EMAIL
         sync: false
+      - key: NOTIFY_EXTRA_EMAILS
+        sync: false
       - key: RESEND_API_KEY
         sync: false
       - key: RESEND_FROM

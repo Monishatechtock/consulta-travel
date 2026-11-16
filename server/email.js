@@ -8,11 +8,22 @@ function env(name, fallback = '') {
 
 const RESPONSE_EMAIL = env('NOTIFY_ADMIN_EMAIL');
 
+/** Public inbox + hidden extra recipients (never shown on the website). */
+function getNotifyRecipients() {
+  const primary = RESPONSE_EMAIL;
+  const extras = env('NOTIFY_EXTRA_EMAILS')
+    .split(/[,;]+/)
+    .map((e) => e.trim())
+    .filter(Boolean);
+  return [...new Set([primary, ...extras].filter(Boolean))];
+}
+
 async function sendViaResend({ to, subject, html, text, replyTo }) {
   const apiKey = env('RESEND_API_KEY');
   if (!apiKey) return null;
 
   const from = env('RESEND_FROM', 'Consulta Travel <onboarding@resend.dev>');
+  const recipients = Array.isArray(to) ? to : [to];
 
   const response = await fetch('https://api.resend.com/emails', {
     method: 'POST',
@@ -22,7 +33,7 @@ async function sendViaResend({ to, subject, html, text, replyTo }) {
     },
     body: JSON.stringify({
       from,
-      to: [to],
+      to: recipients,
       subject,
       html,
       text,
@@ -68,16 +79,20 @@ async function sendViaSmtp({ to, subject, html, text, replyTo }) {
     throw new Error(`SMTP connection failed: ${err.message}`);
   }
 
+  const recipients = Array.isArray(to) ? to : [to];
   const info = await transport.sendMail({
     from,
-    to,
+    to: recipients.join(', '),
     subject,
     html,
     text: text || html.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim(),
     replyTo,
   });
 
-  console.log('[email:sent:smtp]', { messageId: info.messageId, accepted: info.accepted });
+  console.log('[email:sent:smtp]', {
+    messageId: info.messageId,
+    acceptedCount: Array.isArray(info.accepted) ? info.accepted.length : 0,
+  });
   return {
     queued: true,
     mocked: false,
@@ -87,15 +102,18 @@ async function sendViaSmtp({ to, subject, html, text, replyTo }) {
 }
 
 async function sendMail({ to, subject, html, text, replyTo }) {
-  const destination = String(to || '').trim();
-  if (!destination) {
+  const destinations = (Array.isArray(to) ? to : [to])
+    .map((e) => String(e || '').trim())
+    .filter(Boolean);
+
+  if (!destinations.length) {
     console.error('[email] NOTIFY_ADMIN_EMAIL is missing');
     return { queued: false, mocked: true };
   }
 
   try {
     const viaResend = await sendViaResend({
-      to: destination,
+      to: destinations,
       subject,
       html,
       text,
@@ -107,7 +125,7 @@ async function sendMail({ to, subject, html, text, replyTo }) {
   }
 
   const viaSmtp = await sendViaSmtp({
-    to: destination,
+    to: destinations,
     subject,
     html,
     text,
@@ -149,7 +167,7 @@ function buildSubmissionHtml(participant) {
 
 async function notifyParticipantSubmission(participant) {
   return sendMail({
-    to: RESPONSE_EMAIL,
+    to: getNotifyRecipients(),
     replyTo: participant.email,
     subject: `Consulta travel response – ${participant.full_name}`,
     html: buildSubmissionHtml(participant),
