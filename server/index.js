@@ -6,7 +6,7 @@ const cors = require('cors');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const db = require('./db');
-const { notifyParticipantSubmission } = require('./email');
+const { notifyParticipantSubmission, getEmailStatus } = require('./email');
 
 const app = express();
 const PORT = Number(process.env.PORT || 4000);
@@ -88,11 +88,21 @@ function validateParticipant(body) {
 }
 
 app.get('/api/health', (_req, res) => {
+  const email = getEmailStatus();
   res.json({
     ok: true,
     service: 'Consulta Travel API',
     frontend: fs.existsSync(path.join(clientDist, 'index.html')),
     publicPath: clientDist,
+    email: {
+      ready: email.ready,
+      preferredProvider: email.preferredProvider,
+      resendConfigured: email.resendConfigured,
+      smtpConfigured: email.smtpConfigured,
+      onRender: email.onRender,
+      notifyConfigured: email.notifyConfigured,
+      recipientCount: email.recipientCount,
+    },
   });
 });
 
@@ -160,16 +170,26 @@ app.post('/api/participants', async (req, res) => {
   const participant = mapParticipant(row);
 
   let emailDelivered = false;
+  let emailProvider = null;
+  let emailReason = null;
   try {
     const mailResult = await notifyParticipantSubmission(row);
     emailDelivered = Boolean(mailResult && mailResult.queued && !mailResult.mocked);
+    emailProvider = mailResult?.provider || null;
+    emailReason = mailResult?.reason || null;
+    if (!emailDelivered) {
+      console.error('[email] notification not delivered:', emailReason || 'unknown');
+    }
   } catch (err) {
+    emailReason = err.message;
     console.error('Email notification failed:', err.message);
   }
 
   res.status(201).json({
     participant,
     emailDelivered,
+    emailProvider,
+    emailReason: emailDelivered ? null : emailReason,
     message: emailDelivered
       ? 'Travel information submitted and emailed successfully'
       : 'Travel information submitted successfully',

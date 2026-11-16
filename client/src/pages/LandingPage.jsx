@@ -122,11 +122,11 @@ export default function LandingPage() {
     try {
       const data = await api.submitParticipant(form);
       notify({
-        type: 'success',
+        type: data.emailDelivered ? 'success' : 'success',
         title: 'Submission received',
         message: data.emailDelivered
           ? 'Travel details emailed to the Consulta desk.'
-          : 'Saved. Your record is stored.',
+          : 'Saved. Email could not be sent — check mail settings on the server.',
       });
       navigate('/confirmation', { state: { participant: data.participant } });
     } catch (err) {

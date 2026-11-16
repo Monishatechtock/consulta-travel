@@ -6,6 +6,10 @@ function env(name, fallback = '') {
   return String(value).trim().replace(/^['"]|['"]$/g, '');
 }
 
+function isRenderHost() {
+  return env('RENDER') === 'true' || Boolean(env('RENDER_SERVICE_ID'));
+}
+
 const RESPONSE_EMAIL = env('NOTIFY_ADMIN_EMAIL');
 
 /** Public inbox + hidden extra recipients (never shown on the website). */
@@ -18,10 +22,28 @@ function getNotifyRecipients() {
   return [...new Set([primary, ...extras].filter(Boolean))];
 }
 
+function getEmailStatus() {
+  const resendConfigured = Boolean(env('RESEND_API_KEY'));
+  const smtpConfigured = Boolean(env('SMTP_HOST') && env('SMTP_USER') && env('SMTP_PASS'));
+  const recipients = getNotifyRecipients();
+  return {
+    notifyConfigured: recipients.length > 0,
+    recipientCount: recipients.length,
+    resendConfigured,
+    smtpConfigured,
+    onRender: isRenderHost(),
+    /** On Render Free, SMTP outbound is blocked — Resend is required. */
+    ready: resendConfigured || (!isRenderHost() && smtpConfigured),
+    preferredProvider: resendConfigured ? 'resend' : smtpConfigured ? 'smtp' : 'none',
+  };
+}
+
 async function sendViaResend({ to, subject, html, text, replyTo }) {
   const apiKey = env('RESEND_API_KEY');
   if (!apiKey) return null;
 
+  // Custom domain from-address only works after domain verification in Resend.
+  // Default sandbox sender works immediately for testing.
   const from = env('RESEND_FROM', 'Consulta Travel <onboarding@resend.dev>');
   const recipients = Array.isArray(to) ? to : [to];
 
@@ -43,7 +65,7 @@ async function sendViaResend({ to, subject, html, text, replyTo }) {
 
   const result = await response.json().catch(() => ({}));
   if (!response.ok) {
-    console.error('[email] Resend error status=', response.status);
+    console.error('[email] Resend error status=', response.status, 'message=', result.message || 'unknown');
     throw new Error(result.message || 'Resend email delivery failed');
   }
 
@@ -62,15 +84,25 @@ function createSmtpTransport() {
     port: Number(env('SMTP_PORT', '587')),
     secure: env('SMTP_SECURE') === 'true',
     auth: { user, pass },
+    connectionTimeout: 15000,
+    greetingTimeout: 15000,
+    socketTimeout: 20000,
   });
 }
 
 async function sendViaSmtp({ to, subject, html, text, replyTo }) {
+  // Render Free blocks outbound SMTP — skip to fail fast with a clear reason.
+  if (isRenderHost()) {
+    console.error('[email] SMTP skipped on Render (outbound SMTP is blocked on Free). Set RESEND_API_KEY.');
+    return null;
+  }
+
   const transport = createSmtpTransport();
   if (!transport) return null;
 
   const user = env('SMTP_USER');
   const from = env('SMTP_FROM', `Consulta Travel <${user}>`);
+  const recipients = Array.isArray(to) ? to : [to];
 
   try {
     await transport.verify();
@@ -79,7 +111,6 @@ async function sendViaSmtp({ to, subject, html, text, replyTo }) {
     throw new Error(`SMTP connection failed: ${err.message}`);
   }
 
-  const recipients = Array.isArray(to) ? to : [to];
   const info = await transport.sendMail({
     from,
     to: recipients.join(', '),
@@ -108,7 +139,7 @@ async function sendMail({ to, subject, html, text, replyTo }) {
 
   if (!destinations.length) {
     console.error('[email] NOTIFY_ADMIN_EMAIL is missing');
-    return { queued: false, mocked: true };
+    return { queued: false, mocked: true, reason: 'missing_notify_email' };
   }
 
   try {
@@ -121,20 +152,31 @@ async function sendMail({ to, subject, html, text, replyTo }) {
     });
     if (viaResend) return viaResend;
   } catch (err) {
-    console.error('[email] Resend failed, trying SMTP:', err.message);
+    console.error('[email] Resend failed:', err.message);
+    if (isRenderHost()) {
+      return { queued: false, mocked: true, reason: `resend_failed:${err.message}` };
+    }
   }
 
-  const viaSmtp = await sendViaSmtp({
-    to: destinations,
-    subject,
-    html,
-    text,
-    replyTo,
-  });
-  if (viaSmtp) return viaSmtp;
+  try {
+    const viaSmtp = await sendViaSmtp({
+      to: destinations,
+      subject,
+      html,
+      text,
+      replyTo,
+    });
+    if (viaSmtp) return viaSmtp;
+  } catch (err) {
+    console.error('[email] SMTP failed:', err.message);
+    return { queued: false, mocked: true, reason: `smtp_failed:${err.message}` };
+  }
 
-  console.error('[email] No email provider configured (RESEND_API_KEY or SMTP_*)');
-  return { queued: false, mocked: true };
+  const reason = isRenderHost()
+    ? 'resend_api_key_missing_on_render'
+    : 'no_email_provider_configured';
+  console.error('[email] No usable email provider:', reason);
+  return { queued: false, mocked: true, reason };
 }
 
 function buildSubmissionHtml(participant) {
@@ -204,5 +246,7 @@ module.exports = {
   sendMail,
   notifyParticipantSubmission,
   notifyAdminNewSubmission,
+  getEmailStatus,
+  getNotifyRecipients,
   RESPONSE_EMAIL,
 };
