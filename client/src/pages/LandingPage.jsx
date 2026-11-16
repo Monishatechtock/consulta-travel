@@ -48,6 +48,14 @@ const COUNTRIES = [
   'Brazil',
   'South Africa',
   'Japan',
+  'Dominican Republic',
+  'Togo',
+  'Philippines',
+  'Malta',
+  'Poland',
+  'Argentina',
+  'Kenya',
+  'Nigeria',
   'Other',
 ];
 
