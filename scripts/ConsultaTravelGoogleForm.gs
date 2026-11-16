@@ -80,6 +80,8 @@ function createConsultaTravelForm() {
       'Brazil',
       'South Africa',
       'Japan',
+      'China',
+      'Papua New Guinea',
       'Dominican Republic',
       'Togo',
       'Philippines',
